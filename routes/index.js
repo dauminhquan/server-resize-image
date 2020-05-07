@@ -28,13 +28,14 @@ router.get('/request-image',(req,res) => {
   let url = req.query.url
     let fileName = req.query.fileName
     let uriFile = fileName+'.jpg'
+    let maxSize = req.query.maxSize|| 1750
   download(url, uriFile, function(err){
       if(err){
         return res.json({
           message: 'error'
         })
       }
-      im.convert([uriFile, '-resize', '2500x2500', uriFile],
+      im.convert([uriFile, '-resize', maxSize+'x'+maxSize, uriFile],
           function(err, stdout){
               if (err){
                   return res.json({
